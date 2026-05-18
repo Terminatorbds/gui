@@ -1,0 +1,21 @@
+services:
+  node-app:
+    container_name: node-app-dev
+    command: yarn dev -L
+    depends_on:
+      - mongodb
+      - maildev
+    environment:
+      - SMTP_HOST=maildev
+      - SMTP_PORT=1025
+      - SMTP_USERNAME=
+      - SMTP_PASSWORD=
+
+  maildev:
+    image: maildev/maildev:2.2.1
+    container_name: maildev
+    ports:
+      - '1080:1080'
+      - '1025:1025'
+    networks:
+      - node-network
